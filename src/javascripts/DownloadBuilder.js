@@ -1,4 +1,4 @@
-/* DownloadBuilder.js - v0.1.0 - 2012-08-06
+/* DownloadBuilder.js - v0.1.0 - 2012-08-08
 * http://www.gregfranko.com/downloadBuilder.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -395,8 +395,6 @@
     
                         // Save the text response in a local variable
                         text = this.responseText || this.response || "";
-
-                        console.log(text);
 
                         // Append the text response to the file instance property
                         self.file += text;
