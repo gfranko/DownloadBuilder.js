@@ -18,9 +18,6 @@ DownloadBuilder.js is heavily influenced by [Eric Bidler](https://github.com/ebi
 
    - Supports **caching** ajax/jsonp requests via **Session Storage**
 
-##Requirements
-None
-
 ##Optional Dependencies
 
 [window.btoa and window.atob polyfill](https://bitbucket.org/davidchambers/base64.js) - IE < 10 does not support window.atob (necessary to pull files from Github)
@@ -48,6 +45,12 @@ You'll find source code in the "src" subdirectory!
 If you find that you need a feature that DownloadBuilder does not currently support, either let me know via the DownloadBuilder issue tracker, or fork DownloadBuilder on Github and extend it.
 
 ##Change Log
+
+`0.2.0` - August 8th, 2012
+
+- Fixed Github allocation overflow bug.
+
+- Updated Demo page.
 
 `0.1.0` - August 6th, 2012
 

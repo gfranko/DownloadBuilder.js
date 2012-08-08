@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,7 +11,7 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/black-tie/jquery-ui.css" rel="stylesheet">
     <link href="css/prettify.css" type="text/css" rel="stylesheet" />
-    <link href="css/styles1.css" type="text/css" rel="stylesheet" />
+    <link href="css/styles.css" type="text/css" rel="stylesheet" />
     <link href="css/docs.css" type="text/css" rel="stylesheet" />
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -37,12 +36,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">{{ Enter Project Name Here }}</a>
+          <a class="brand" href="#">Enter Project Name Here</a>
 
           <div class="nav-collapse">
             <ul class="nav">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="customDownload.html" class="active">Custom Download</a></li>
+              <li><a href="documentation.html">Home</a></li>
+              <li class="active"><a href="customDownload.html" class="active">Custom Download</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -53,17 +52,20 @@
 
 <header class="jumbotron subhead" id="overview">
   <h1>Customize and download</h1>
-  <p class="lead"><a href="https://github.com/gfranko/jquery.selectBoxIt.js/zipball/master">Download the full repository</a> or customize your entire {{ Enter Project Name Here }} build by selecting only the components that you need.</p>
+  <p class="lead"><a href="#">Download the full repository</a> or customize your entire <em>Enter Project Name Here</em> build by selecting only the components that you need.</p>
   <div class="subnav">
     <ul class="nav nav-pills">
-      <li><a href="#components">1. Choose and Generate CSS components</a></li>
-      <li><a href="#components">2. Choose and Generate CSS components</a></li>
-      <li><a href="#download">3. Start Using {{ Enter Project Name Here }}</a></li>
+      <li><a href="#css-downloads">1. Choose and Generate CSS components</a></li>
+      <li><a href="#javascript-downloads">2. Choose and Generate JavaScript components</a></li>
+      <li><a href="#">3. Be Happy</a></li>
     </ul>
   </div>
 </header>
 
-      <hr>
+<hr>
+<p class="well note">
+<strong>Note:</strong> This example page uses the jQuery plugin, <a href="https://github.com/gfranko/jquery.selectBoxIt.js" target="_blank">SelectBoxIt</a>, to demonstrate how to create custom builds with Downloadbuilder.js.
+</p>
 
 <section class="custom-downloads" id="css-downloads">
   <div class="page-header">
@@ -75,7 +77,7 @@
   </div>
   <div class="row">
     <div class="span3">
-      <label class="checkbox"><input checked="checked" type="checkbox" value="css/jquery.selectboxit.css" data-location="local"> SelectBoxIt CSS</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/stylesheets/SelectBoxIt/jquery.selectBoxIt.css"> SelectBoxIt CSS</label>
     </div>
   </div>
   <br />
@@ -95,22 +97,22 @@
   </div>
   <div class="row">
     <div class="span3">
-      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.core.min.js" data-author="gfranko" data-repo="jquery.selectBoxIt.js" data-branch="dev" data-location="github" data-localpath="js/jquery.selectBoxIt.core.min.js" disabled> SelectBoxIt Core</label>
-      <label class="checkbox"><input checked="checked" type="checkbox" value="js/jquery.selectBoxIt.ariaAccessibility.min.js" data-location="local"> Aria Accessibility</label>
-      <label class="checkbox"><input checked="checked" type="checkbox" value="js/jquery.selectBoxIt.destroy.min.js" data-location="local"> Destroy method</label>
-      <label class="checkbox"><input checked="checked" type="checkbox" value="js/jquery.selectBoxIt.disable.min.js" data-location="local"> Disable method</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.core.min.js" disabled> SelectBoxIt Core</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.ariaAccessibility.min.js"> Aria Accessibility</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.destroy.min.js"> Destroy method</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.disable.min.js"> Disable method</label>
     </div>
     <div class="span3">
-      <label class="checkbox"><input checked="checked" type="checkbox" value="js/jquery.selectBoxIt.dynamicPositioning.min.js" data-location="local"> Dynamic Positioning</label>
-      <label class="checkbox"><input checked="checked" type="checkbox" value="js/jquery.selectBoxIt.enable.min.js" data-location="local"> Enable method</label>
-      <label class="checkbox"><input checked="checked" type="checkbox" value="js/jquery.selectBoxIt.jqueryui.min.js" data-location="local"> jQueryUI CSS Support</label>
-      <label class="checkbox"><input checked="checked" type="checkbox" value="js/jquery.selectBoxIt.keyboardNavigation.min.js" data-location="local"> Keyboard Navigation</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.dynamicPositioning.min.js"> Dynamic Positioning</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.enable.min.js"> Enable method</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.jqueryui.min.js"> jQueryUI CSS Support</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.keyboardNavigation.min.js"> Keyboard Navigation</label>
     </div>
     <div class="span3">
-      <label class="checkbox"><input checked="checked" type="checkbox" value="js/jquery.selectBoxIt.keyboardSearch.min.js" data-location="local"> Keyboard Search</label>
-      <label class="checkbox"><input checked="checked" type="checkbox" value="js/jquery.selectBoxIt.setOption.min.js" data-location="local">Set Option method</label>
-      <label class="checkbox"><input checked="checked" type="checkbox" value="js/jquery.selectBoxIt.setOptions.min.js" data-location="local"> Set Options method</label>
-      <label class="checkbox"><input checked="checked" type="checkbox" value="js/jquery.selectBoxIt.wait.min.js" data-location="local"> Wait method</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.keyboardSearch.min.js"> Keyboard Search</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.setOption.min.js">Set Option method</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.setOptions.min.js"> Set Options method</label>
+      <label class="checkbox"><input checked="checked" type="checkbox" value="src/javascripts/jquery.selectBoxIt.wait.min.js"> Wait method</label>
     </div>
   </div><!-- /row -->
   <br />
@@ -135,15 +137,17 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/jquery-ui-1.8.22.custom.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="../src/javascripts/DownloadBuilder.js"></script>
-
-    </script>
+    <script src="js/jquery.tocify.min.js"></script>
+    <script src="js/prettify.js"></script>
+    <script src ="js/base64.js"></script>
+    <script src="js/DownloadBuilder.js"></script>
     <script>
+
         $(function() {
 
-            //$(".optionName").popover();
             $("a[href='#']").click(function(event) {
  
                 event.preventDefault();
@@ -160,7 +164,7 @@
 
             });
 
-            var builder = new downloadBuilder();
+            var builder = new downloadBuilder({ "location": "github", "author": "gfranko", "repo": "jquery.selectboxit.js", "branch": "dev" });
 
             $("#css-generate").on("click", function() {
 
