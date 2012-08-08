@@ -1,74 +1,358 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Downloadbuilder.js : A JavaScript library that uses the HTML5 Filesystem API to create concatenated single file custom builds for front-end projects.  The library currently supports concatenating local files (supported in all  major browsers) and/or files from Github (not supported in IE unless you use a window.atob polyfill).  The library also uses Session Storage to provide an option to cache ajax/jsonp requests." />
+    <meta charset="utf-8">
+    <title>Document-Bootstrap</title>
+    <!-- Mobile viewport optimized -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Mobile Internet Explorer allows us to activate ClearType technology for smoothing fonts for easy reading -->
+    <meta http-equiv="cleartype" content="on">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/black-tie/jquery-ui.css" rel="stylesheet">
+    <link href="css/jquery.tocify.css" rel="stylesheet">
+    <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="css/styles.css" type="text/css" rel="stylesheet" />
 
-    <title>Downloadbuilder.js</title>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
   </head>
 
   <body>
+    <a href="https://github.com/gfranko/DownloadBuilder.js" target="_blank" id="fork-me"><img style="position: fixed;top: 0; right: 0; border: 0;z-index:999999;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" alt="Fork me on GitHub"></a>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/gfranko/DownloadBuilder.js">View on GitHub</a>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3 tocify">
+          <div id="toc">
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+          <div class="hero-unit">
+          <img src="img/html5.png" style="float:left;" /><h1>DownloadBuilder.js</h1>
 
-          <h1 id="project_title">Downloadbuilder.js</h1>
-          <h2 id="project_tagline">A JavaScript library that uses the HTML5 Filesystem API to create concatenated single file custom builds for front-end projects.  The library currently supports concatenating local files (supported in all  major browsers) and/or files from Github (not supported in IE unless you use a window.atob polyfill).  The library also uses Session Storage to provide an option to cache ajax/jsonp requests.</h2>
+            <br /><br />
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/gfranko/DownloadBuilder.js/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/gfranko/DownloadBuilder.js/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+            <h2>Description</h2>
+            <p>A JavaScript library that uses the HTML5 Filesystem API to create concatenated single file custom builds for front-end projects. </p>
+            <br />
+            <p>The project is hosted on <a href="https://github.com/gfranko/DownloadBuilder.js" target="_blank" class="projectLinks">Github</a> and is available for use under the <a href="https://github.com/gfranko/DownloadBuilder.js/blob/master/LICENSE-MIT" target="_blank" class="projectLinks">MIT software license</a>.  You can report bugs and discuss features on the <a href="https://github.com/gfranko/DownloadBuilder.js/issues" target="_blank">GitHub issues page</a>, or send tweets to <a href="https://twitter.com/GregFranko" target="_blank">Greg Franko</a>.
+            </p>
+            <p><a class="btn btn-primary btn-large" href="https://github.com/gfranko/DownloadBuilder.js" target="_blank">Fork on Github &raquo;</a>
+            <a class="btn btn-large" href="customDownload.html" target="_blank">View Project Example &raquo;</a>
+            </p>
+          <br /><br />
+          <h2>Optional Dependencies</h2>
+          <br />
+          <p class="well">
+          <a href="https://bitbucket.org/davidchambers/base64.js" target="_blank">window.btoa and window.atob polyfill</a> - IE < 10 does not support <a href="https://developer.mozilla.org/en-US/docs/DOM/window.atob" target="_blank">window.atob</a> (necessary to pull files from Github)
+          </p>
+          <br />
+          <h2>Notable Features</h2>
+          <br />
+          <p class="well">
+              Supports <a href="http://updates.html5rocks.com/2012/06/Don-t-Build-Blobs-Construct-Them" target="_blank">Blob URL</a> creation
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+              <br /><br />
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+              Supports concatenating local files and/or files from Github
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+              <br /><br />
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+              Supports caching ajax/jsonp requests via Session Storage
 
-<h3>Designer Templates</h3>
+              <br /><br />
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+              Library independent
+          </p>
+          <br />
+          <h2>Browser Support</h2>
+          <br />
+          <p class="well">
+          <strong>Only Google Chrome fully supports the HTML5 Filesystem API</strong>. This means that only Google Chrome supports creating a custom build url.
 
-<h3>Rather Drive Stick?</h3>
+          <br /><br />
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+          All Major Browsers (IE8+, Firefox, Chrome, Safari) support retrieving local files and concatenating them.
 
-<h3>Authors and Contributors</h3>
+          <br /><br />
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+          Firefox, Chrome, and Safari all support retrieving Github files. If you include the <a href="https://bitbucket.org/davidchambers/base64.js" target="_blank">window.atob polyfill</a>, then IE8+ will also support retrieving Github files.
+          </p>
+          <br />
+          <h2>Getting Started</h2>
+          <p class="well">
+          Download the <a href="https://github.com/gfranko/DownloadBuilder.js/zipball/master" target="_blank">entire project</a> and look at the examples in the <code>demos</code> folder.
+          </p>
+          <br /><br />
+          <h3>Include DownloadBuilder.js</h3>
+          </p>
+          <pre class="prettyprint">
+          // DownloadBuilder.js
+          &lt;script src="DownloadBuilder.js" /&gt;
+          </pre>
+          <br />
+          <h3>HTML</h3>
+          </p>
+          <p class="well note">
+          Create one checkbox for each file in your project that you want to allow users to download.  Each checkbox <code>value</code> should be the full file path.
+          <br />
+          <strong>Note:</strong> You can use Github or local relative file paths.  This example uses Github and more information on setting up a link to a Github repository is in the JavaScript documentation.
+          </p>
+          <pre class="prettyprint">
+          // A checkbox with the correct Github filepath of testfile.js
+          &lt;label class="checkbox"&gt;&lt;input checked="checked" type="checkbox" value="src/javascripts/testfile.js"&gt;Test File&lt;/label&gt;
+          </pre>
+          <br />
+          <p>
+          <h3>JavaScript</h3>
+          </p>
+          <p class="well note">
+              Using a library (eg. jQuery) or regular JavaScript, create a new DownloadBuilder object instance with custom options when the DOM is ready.
+              <br />
+              <strong>Note:</strong> All options are optional and more documentation about all of the options can be found further down in the documentation.
+          </p>
+          <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
 
-<h3>Support or Contact</h3>
+                  // All options passed to the DownloadBuilder object constructor are optional
+                  // This example is a sample Github setup
+                  var builder = new DownloadBuilder({ "location": "github", "author": "gfranko", "repo": "jquery.selectboxit.js", "branch": "dev" });
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
+              });
+          </pre>
+          <br />
+          <p class="well note">
+              Call the buildURL() method to construct a file url (if supported).  
+              <br />
+              <strong>Note:</strong> More documentation about the buildURL method and other methods can be found further down in the documentation.
+          </p>
+          <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Downloadbuilder.js maintained by <a href="https://github.com/gfranko">gfranko</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+                  // All options passed to the DownloadBuilder object constructor are optional
+                  // This example is a sample Github setup
+                  var builder = new DownloadBuilder({ "location": "github", "author": "gfranko", "repo": "jquery.selectboxit.js", "branch": "dev" });
 
+                  // Whenever an element with an id of css-generate is clicked, the buildURL() method is called
+                  $("#css-generate").on("click", function() {
+
+                      // Pass in all of the checkboxes that should be used to download files, the desired name of the file to be created,
+                      // the type of file to be created, and a callback function
+                      builder.buildURL($("#css-downloads input[type='checkbox']:checked"), "jquery.selectboxit.css", "css", function(data) {
+
+                           // An object is passed to the callback function which contains a file url
+                           // (if the current browser supports the HTML5 Filesystem API), file content (the text of the file),
+                           // the name of the file that was created, and the type of file that was created.
+
+                           // Put any custom logic here
+
+                      });
+
+              });
+          </pre>
+          <h2>Options</h2>
+          <p class="well">
+              Here are all of the global and individual options that can be used with DownloadBuilder.js
+          </p>
     
+          <h3>Global Options</h3>
+          <p class="well note">
+              Here are global options that can be set when a new DownloadBuilder instance is created: <em>var builder = new DownloadBuilder({ });</em>
+              <br />
+              <strong>Note:</strong> All global options can be overriden per checkbox by specifying data attributes on a checkbox.  This documentation can be found in the Data Options Section below.
+          </p>
+          <table class="table table-striped table-bordered table-condensed">
+              <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Parameters</th>
+              </tr>
+              <tr>
+                  <td class="optionName" title="cache" data-content="The amount of time to store files in Session Storage before making new ajax/jsonp file requests">
+                      <a href="#">cache</a>
+                  </td>
+                  <td>Number (milliseconds)</td>
+                  <td>3600000 (one hour)</td>
+                  <td>Any number</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="location" data-content="Where a project files are located (Github or Locally)">
+                      <a href="#">location</a>
+                  </td>
+                  <td>String</td>
+                  <td>"local"</td>
+                  <td>"local" or "github"</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="author" data-content="A Github project username.  This is only necessary if you are retrieving files from Github.">
+                      <a href="#">author</a>
+                  </td>
+                  <td>String</td>
+                  <td>""</td>
+                  <td>Any valid Github username</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="repo" data-content="A Github project name. This is only necessary if you are retrieving files from Github.">
+                      <a href="#">repo</a>
+                  </td>
+                  <td>String</td>
+                  <td>""</td>
+                  <td>Any valid Github repository name</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="branch" data-content="A Github repository branch name.  This is only necessary if you are retrieving files from Github.">
+                      <a href="#">branch</a>
+                  </td>
+                  <td>String</td>
+                  <td>""</td>
+                  <td>Any valid Github repository branch name</td>
+              </tr>
+          </table>
+          <br />
+          <h3>Data-Options</h3>
+          <p class="well note">
+              Here are individual options that can be set on each checkbox to override a global option of a DownloadBuilder instance.
+              <br />
+              <strong>Note:</strong> All other checkbox's that do not have these data-options will continue to use the global options set on the DownloadBuilder instance.
+          </p>
+          <table class="table table-striped table-bordered table-condensed">
+              <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Parameters</th>
+              </tr>
+              <tr>
+                  <td class="optionName" title="data-location" data-content="Where a project files are located (Github or Locally)">
+                      <a href="#">data-location</a>
+                  </td>
+                  <td>String</td>
+                  <td>"local"</td>
+                  <td>"local" or "github"</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="data-author" data-content="A Github project username.  This is only necessary if you are retrieving files from Github.">
+                      <a href="#">data-author</a>
+                  </td>
+                  <td>String</td>
+                  <td>""</td>
+                  <td>Any valid Github username</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="data-repo" data-content="A Github project name. This is only necessary if you are retrieving files from Github.">
+                      <a href="#">data-repo</a>
+                  </td>
+                  <td>String</td>
+                  <td>""</td>
+                  <td>Any valid Github repository name</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="data-branch" data-content="A Github repository branch name.  This is only necessary if you are retrieving files from Github.">
+                      <a href="#">data-branch</a>
+                  </td>
+                  <td>String</td>
+                  <td>""</td>
+                  <td>Any valid Github repository branch name</td>
+              </tr>
+          </table>
+          <br />
+          <h2>Methods</h2>
+          <p class="well">
+              Here are methods that can be called once a DownloadBuilder instance is created: <em>var builder = new DownloadBuilder({ });</em>
+          </p>
+          <table class="table table-striped table-bordered table-condensed">
+              <tr>
+                  <th>Name</th>
+                  <th>Parameters</th>
+                  <th>Example</th>
+              </tr>
+              <tr>
+                  <td class="optionName" title="buildURL" data-content="Downloads and concatenates files (file paths should be listed in each checkbox value), and constructs a temporary file url that references the recently created concatenated file.">
+                      <a href="#">buildURL</a>
+                  </td>
+                  <td>DOM Checkbox Elements, String file name, String file type, Function callback</td>
+                  <td>builder.buildURL($("#css-downloads input[type='checkbox']:checked"), "jquery.selectboxit.css", "css", function(data) {});</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="createURL" data-content="Constructs a temporary file url that references content passed to the method.">
+                      <a href="#">createURL</a>
+                  </td>
+                  <td>Object Literal: String file name, String file type, String file content</td>
+                  <td>builder.createURL({ "lang": "css", "fileName": "test", "data": "body { color: red; }", "callback": function(url) {} });</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="JSONP" data-content="Constructs a JSONP request and returns a JSON object in the callback function.">
+                      <a href="#">JSONP</a>
+                  </td>
+                  <td>String url, String method name (optional), Function callback</td>
+                  <td>this.JSONP("someURL", function(data) {});</td>
+              </tr>
+          </table>
+          <br />
+          <h2>Contributing</h2>
+          <p class="well">
+              Take care to maintain the existing coding style. Add <strong>Jasmine</strong> unit tests for any new or changed functionality. Lint and test your code using <strong>Grunt</strong>.
+          </p>
+          <p class="well">
+              <span class="note">
+                  After you have verified your code, send a pull request to the <em>Downloadbuilder</em> dev branch.  After you send a pull request, you will hear back from me shortly after I review your code.  You’ll find source code in the <code>src</code> subdirectory!
+              </span>
+          </p>
+          <br />
+          <h2>Extending</h2>
+          <p class="well">
+              If you find that you need a feature that <em>DownloadBuilder.js</em> does not currently support, either let me know via the <a href="https://github.com/gfranko/DownloadBuilder.js/issues" target="_blank">Github issue tracker</a>, or <a href="https://github.com/gfranko/DownloadBuilder.js" target="_blank">fork the project</a> and and easily extend <em>DownloadBuilder.js</em>!
+          </p>
+      </div><!--/row-->
+      <hr>
+      <footer align="center">
+        <p>
+            Copyright &copy; 2012 Greg Franko
+            <br /><br />
+            Published by Github Pages
+        </p>
+      </footer>
+    </div><!--/.fluid-container-->
 
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/jquery-ui-1.8.22.custom.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.tocify.min.js"></script>
+    <script src="js/prettify.js"></script>
+    <script>
+        $(function() {
+
+            $("#toc").tocify({ selectors: "h2, h3, h4", scrollTo: 60, highlightOffset: 60, extendPage: true });
+
+            prettyPrint();
+
+            $(".optionName").popover();
+
+            $("a[href='#']").click(function(event) {
+ 
+                event.preventDefault();
+
+            });
+
+        });
+    </script>
   </body>
 </html>
