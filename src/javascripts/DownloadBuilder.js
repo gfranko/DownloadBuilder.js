@@ -1,4 +1,4 @@
-/* DownloadBuilder.js - v0.1.0 - 2012-08-08
+/* DownloadBuilder.js - v0.3.0 - 2012-08-08
 * http://www.gregfranko.com/downloadBuilder.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -61,7 +61,7 @@
     DownloadBuilder.prototype = {
 
         // Library Version Number
-        VERSION: "0.1.0",
+        VERSION: "0.3.0",
 
         //Github Rate Limit URL
         githubRateLimitUrl: "https://api.github.com/rate_limit",
