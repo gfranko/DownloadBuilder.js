@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
+    <title>DownloadBuilder.js by Greg Franko</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -143,7 +143,7 @@
     <script src="js/jquery.tocify.min.js"></script>
     <script src="js/prettify.js"></script>
     <script src ="js/base64.js"></script>
-    <script src="js/DownloadBuilder.js"></script>
+    <script src="../src/javascripts/DownloadBuilder.js"></script>
     <script>
 
         $(function() {
@@ -164,7 +164,7 @@
 
             });
 
-            var builder = new downloadBuilder({ "location": "github", "author": "gfranko", "repo": "jquery.selectboxit.js", "branch": "dev" });
+            var builder = new DownloadBuilder({ "location": "github", "author": "gfranko", "repo": "jquery.selectboxit.js", "branch": "dev" });
 
             $("#css-generate").on("click", function() {
 

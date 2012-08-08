@@ -48,13 +48,19 @@ If you find that you need a feature that DownloadBuilder does not currently supp
 
 ##Change Log
 
-`0.2.0` - August 8th, 2012
+`0.3.0` - August 8, 2012
+
+- Updated documentation and fixed bugs
+
+- Added two demo pages (one for local and one for Github).
+
+`0.2.0` - August 8, 2012
 
 - Fixed Github allocation overflow bug.
 
 - Updated Demo page.
 
-`0.1.0` - August 6th, 2012
+`0.1.0` - August 6, 2012
 
 - Initial DownloadBuilder release.  Added annotated source code, unit tests, and documentation
 
