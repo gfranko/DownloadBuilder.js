@@ -1,4 +1,4 @@
-/* DownloadBuilder.js - v0.3.0 - 2012-08-08
+/* DownloadBuilder.js - v0.3.0 - 2012-08-09
 * http://www.gregfranko.com/downloadBuilder.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -136,7 +136,7 @@
             var githubSelector = document.querySelectorAll('[data-location="github"]');
 
             // If there is one element or more that are trying to use Github resources
-            if(githubSelector.length) {
+            if(githubSelector.length || this.options.location === "github") {
 
                 // Returns an object
                 return { "isUsing": true, "length": githubSelector.length };

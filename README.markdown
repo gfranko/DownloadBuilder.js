@@ -48,6 +48,10 @@ If you find that you need a feature that DownloadBuilder does not currently supp
 
 ##Change Log
 
+`0.4.0` - August 9, 2012
+
+- Improved Github checking logic
+
 `0.3.0` - August 8, 2012
 
 - Updated documentation and fixed bugs
