@@ -10,7 +10,7 @@ A JavaScript library that uses the HTML5 Filesystem API to create concatenated s
 
 if you are using a browser that does not support the HTML5 Filesystem, the text of the concatenated file will still be available to provide users with the custom build code, just not a separate file link to it.
 
-DownloadBuilder.js is heavily influenced by [Eric Bidler](https://github.com/ebidel) (a member of the Google Chrome Developer Relations Team).  Eric has been a big supporter of the HTML5 Filesystem API and without his HTML5 Rocks articles and HTML5 Filesystem O'Reilly Book, this library would not have been created.  The project is also heavily influenced by [Oscar Goodson's JSONP project](https://github.com/OscarGodson/JSONP) and [James Ward's Github File Download project](https://github.com/jamesward/github-files). 
+DownloadBuilder.js is heavily influenced by [Eric Bidelman](https://github.com/ebidel) (a member of the Google Chrome Developer Relations Team).  Eric has been a big supporter of the HTML5 Filesystem API and without his HTML5 Rocks articles and HTML5 Filesystem O'Reilly Book, this library would not have been created.  The project is also heavily influenced by [Oscar Goodson's JSONP project](https://github.com/OscarGodson/JSONP) and [James Ward's Github File Download project](https://github.com/jamesward/github-files). 
 
 **Notable Features**
 
