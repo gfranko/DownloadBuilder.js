@@ -1,0 +1,664 @@
+<!DOCTYPE html>  <html> <head>   <title>DownloadBuilder.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               DownloadBuilder.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="cm">/* DownloadBuilder.js - v0.4.0 - 2012-08-15</span>
+<span class="cm">* http://www.gregfranko.com/downloadBuilder.js/</span>
+<span class="cm">* Copyright (c) 2012 Greg Franko; Licensed MIT */</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Immediately-Invoked Function Expression (IIFE) <a href="http://benalman.com/news/2010/11/immediately-invoked-function-expression/">Ben Alman Blog Post</a> that calls another IIFE that contains all of the plugin logic.  I use this pattern so that anyone viewing this code does not have to scroll to the bottom of the page to view the local parameters that are passed into the main IIFE.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">downloadBuilder</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>ECMAScript 5 Strict Mode: <a href="http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/">John Resig Blog Post</a></p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="s2">&quot;use strict&quot;</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Calls the second IIFE and locally passes in the global window, and document objects</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">downloadBuilder</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nb">document</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Locally passes in the <code>window</code> object, the <code>document</code> object, and an <code>undefined</code> variable.  The <code>window</code> and <code>document</code> objects are passed in locally, to improve performance, since javascript first searches for a variable match within the local variables set before searching the global variables set.  All of the global variables are also passed in locally to be minifier friendly. <code>undefined</code> can be passed in locally, because it is not a reserved word in JavaScript.</p>             </td>             <td class="code">               <div class="highlight"><pre>
+<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>ECMAScript 5 Strict Mode: <a href="http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/">John Resig Blog Post</a></p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="s2">&quot;use strict&quot;</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Function object constructor</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="kd">var</span> <span class="nx">DownloadBuilder</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Sets the library options</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">this</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Location option (Defaults to an local)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="s2">&quot;location&quot;</span><span class="o">:</span> <span class="p">(</span><span class="nx">obj</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">location</span><span class="p">)</span> <span class="o">||</span> <span class="s2">&quot;local&quot;</span><span class="p">,</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Github author name option</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="s2">&quot;author&quot;</span><span class="o">:</span> <span class="p">(</span><span class="nx">obj</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">author</span><span class="p">)</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Github repo name option</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="s2">&quot;repo&quot;</span><span class="o">:</span> <span class="p">(</span><span class="nx">obj</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">repo</span><span class="p">)</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Github branch option</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="s2">&quot;branch&quot;</span><span class="o">:</span> <span class="p">(</span><span class="nx">obj</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">branch</span><span class="p">)</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Cache option (defaults to an hour (in milliseconds))</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">if</span><span class="p">(</span><span class="nx">obj</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">cache</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span> <span class="o">=</span> <span class="o">+</span><span class="nx">obj</span><span class="p">.</span><span class="nx">cache</span><span class="p">;</span>
+
+        <span class="p">}</span>
+
+        <span class="k">else</span> <span class="p">{</span>
+
+            <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span> <span class="o">=</span> <span class="mi">3600000</span><span class="p">;</span>
+
+        <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Sets up the plugin</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_create</span><span class="p">();</span>
+
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Adds methods to the downloadBuilder prototype object that are shared between all instances</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nx">DownloadBuilder</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>Library Version Number</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">VERSION</span><span class="o">:</span> <span class="s2">&quot;0.4.0&quot;</span><span class="p">,</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>Github Rate Limit URL</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">githubRateLimitUrl</span><span class="o">:</span> <span class="s2">&quot;https://api.github.com/rate_limit&quot;</span><span class="p">,</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>String that will be used to hold the file content</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">file</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <p>Number of the current checkbox that is being traversed</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">currentCheckbox</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>Checkbox HTML elements</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">checkboxes</span><span class="o">:</span> <span class="p">[],</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Callback function that is called when the fileURL creation process is complete</p>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">callback</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <h2>_Create</h2>
+
+<pre><code> Sets up the Library.
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">_create</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <p>Determines if the current browser supports the HTML5 Filesystem API and sets up some global variables needed for the HTML5 filesystem to work</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">this</span><span class="p">.</span><span class="nx">supportsFilesystem</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">fileSystemSupport</span><span class="p">();</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>Instance variable (object) that determines if a user is trying to use a Github resource and how many Github resources are being used</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">this</span><span class="p">.</span><span class="nx">github</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_isUsingGithub</span><span class="p">();</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-25">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-25">&#182;</a>               </div>               <p>If one or more Github resources are trying to be used</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">github</span><span class="p">.</span><span class="nx">isUsing</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-26">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-26">&#182;</a>               </div>               <p>Checks to make sure the user is not over the Github rate limiting capacity and sets an instance property to the number of remaining available Github requests</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">this</span><span class="p">.</span><span class="nx">_checkGithubRateLimit</span><span class="p">();</span>
+
+            <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>Maintains chainability</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-28">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-28">&#182;</a>               </div>               <h2>_fileSystemSetup</h2>
+
+<pre><code> Sets up the HTML5 Filesystem global variables and determines if the current browser supports the API
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">fileSystemSupport</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-29">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-29">&#182;</a>               </div>               <p>HTML5 Filesystem API Variables</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">requestFileSystem</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">requestFileSystem</span> <span class="o">||</span> <span class="nb">window</span><span class="p">.</span><span class="nx">webkitRequestFileSystem</span> <span class="o">||</span> <span class="nb">window</span><span class="p">.</span><span class="nx">mozRequestFileSystem</span><span class="p">;</span>
+
+            <span class="nb">window</span><span class="p">.</span><span class="nx">URL</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">URL</span> <span class="o">||</span> <span class="nb">window</span><span class="p">.</span><span class="nx">webkitURL</span> <span class="o">||</span> <span class="nb">window</span><span class="p">.</span><span class="nx">mozURL</span><span class="p">;</span>
+
+            <span class="nb">window</span><span class="p">.</span><span class="nx">storageInfo</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">storageInfo</span> <span class="o">||</span> <span class="nb">window</span><span class="p">.</span><span class="nx">webkitStorageInfo</span> <span class="o">||</span> <span class="nb">window</span><span class="p">.</span><span class="nx">mozStorageInfo</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-30">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-30">&#182;</a>               </div>               <p>If any of the global HTML5 Filesystem variables are not available</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">requestFileSystem</span> <span class="o">||</span> <span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">Blob</span> <span class="o">||</span> <span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">URL</span> <span class="o">||</span> <span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">storageInfo</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-31">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-31">&#182;</a>               </div>               <p>The HTML5 Filesystem API is not supported</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+
+            <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-32">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-32">&#182;</a>               </div>               <p>The HTML5 Filesystem API is supported</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-33">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-33">&#182;</a>               </div>               <h2>_isUsingGithub</h2>
+
+<pre><code> Determines if any of the file downloads are trying to use Github
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">_isUsingGithub</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-34">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-34">&#182;</a>               </div>               <p>Grabs all of the elements on the page with the data-location='github' HTML5 data attribute</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="kd">var</span> <span class="nx">githubSelector</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;[data-location=&quot;github&quot;]&#39;</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <p>If there is one element or more that are trying to use Github resources</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">if</span><span class="p">(</span><span class="nx">githubSelector</span><span class="p">.</span><span class="nx">length</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">location</span> <span class="o">===</span> <span class="s2">&quot;github&quot;</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-36">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-36">&#182;</a>               </div>               <p>Returns an object</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">return</span> <span class="p">{</span> <span class="s2">&quot;isUsing&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;length&quot;</span><span class="o">:</span> <span class="nx">githubSelector</span><span class="p">.</span><span class="nx">length</span> <span class="p">};</span>
+
+            <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-37">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-37">&#182;</a>               </div>               <p>If there are no elements that are trying to use Github resources</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">else</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-38">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-38">&#182;</a>               </div>               <p>Returns an object</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">return</span> <span class="p">{</span> <span class="s2">&quot;isUsing&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="s2">&quot;length&quot;</span><span class="o">:</span> <span class="nx">githubSelector</span><span class="p">.</span><span class="nx">length</span> <span class="p">};</span>
+
+            <span class="p">}</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-39">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-39">&#182;</a>               </div>               <h2>_checkGithubRateLimit</h2>
+
+<pre><code> Determines if the number of Github HTTP requests has hit the maximum number of requests, within the hour, that Github allows before rate limiting
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">_checkGithubRateLimit</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-40">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-40">&#182;</a>               </div>               <p>Saves the Library object context in the this variable</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-41">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-41">&#182;</a>               </div>               <p>Calls the custom JSONP method (created by Oscar Goodson)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">this</span><span class="p">.</span><span class="nx">JSONP</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">githubRateLimitUrl</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+        
+</pre></div>             </td>           </tr>                               <tr id="section-42">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-42">&#182;</a>               </div>               <p>Sets an instance variable that determines if the Github rate limit has been reached or not</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">self</span><span class="p">.</span><span class="nx">rateLimit</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">rate</span><span class="p">.</span><span class="nx">remaining</span><span class="p">;</span>
+
+            <span class="p">});</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-43">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-43">&#182;</a>               </div>               <p>Maintains chainability</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-44">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-44">&#182;</a>               </div>               <h2>JSONP</h2>
+
+<pre><code> Method created by Oscar Goodson [Github](https://github.com/OscarGodson/JSONP)
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">JSONP</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="nx">method</span><span class="p">,</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+    
+</pre></div>             </td>           </tr>                               <tr id="section-45">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-45">&#182;</a>               </div>               <p>Set the defaults</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="nx">url</span> <span class="o">=</span> <span class="nx">url</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+    
+            <span class="nx">method</span> <span class="o">=</span> <span class="nx">method</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+  
+            <span class="nx">callback</span> <span class="o">=</span> <span class="nx">callback</span> <span class="o">||</span> <span class="kd">function</span><span class="p">(){};</span>
+
+            <span class="kd">var</span> <span class="nx">jsonpScript</span><span class="p">,</span>
+                <span class="nx">generatedFunction</span><span class="p">;</span>
+  
+</pre></div>             </td>           </tr>                               <tr id="section-46">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-46">&#182;</a>               </div>               <p>If no method was set and they used the callback param in place of
+the method param instead, we say method is callback and set a
+default method of "callback"</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">method</span> <span class="o">===</span> <span class="s2">&quot;function&quot;</span><span class="p">)</span> <span class="p">{</span>
+
+                <span class="nx">callback</span> <span class="o">=</span> <span class="nx">method</span><span class="p">;</span>
+
+                <span class="nx">method</span> <span class="o">=</span> <span class="s2">&quot;callback&quot;</span><span class="p">;</span>
+    
+            <span class="p">}</span>
+  
+</pre></div>             </td>           </tr>                               <tr id="section-47">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-47">&#182;</a>               </div>               <p>This randomizes a function <em>name</em> for generated script tag at the bottom to call
+example: jsonp958653</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="nx">generatedFunction</span> <span class="o">=</span> <span class="s2">&quot;jsonp&quot;</span> <span class="o">+</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">*</span><span class="mi">1000001</span><span class="p">);</span>
+  
+</pre></div>             </td>           </tr>                               <tr id="section-48">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-48">&#182;</a>               </div>               <p>Generate the temp JSONP function using the name above
+First, call the function the user defined in the callback param [callback(json)]
+Then delete the generated function from the window [delete window[generatedFunction]]</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="nb">window</span><span class="p">[</span><span class="nx">generatedFunction</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">){</span>
+           
+                <span class="nx">callback</span><span class="p">(</span><span class="nx">json</span><span class="p">);</span>
+        
+</pre></div>             </td>           </tr>                               <tr id="section-49">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-49">&#182;</a>               </div>               <p>A try/catch block is used because IE8 does not support deleting global window properties</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">try</span> <span class="p">{</span>
+
+                    <span class="k">delete</span> <span class="nb">window</span><span class="p">[</span><span class="nx">generatedFunction</span><span class="p">];</span>
+                    
+                <span class="p">}</span>
+
+                <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+
+                    <span class="nb">window</span><span class="p">[</span><span class="nx">generatedFunction</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+
+                <span class="p">}</span>
+    
+            <span class="p">};</span>
+  
+</pre></div>             </td>           </tr>                               <tr id="section-50">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-50">&#182;</a>               </div>               <p>Check if the user set their own params, and if not add a ? to start a list of params
+If in fact they did we add a &amp; to add onto the params
+example1: url = http://url.com THEN http://url.com?callback=X
+example2: url = http://url.com?example=param THEN http://url.com?example=param&amp;callback=X</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">if</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+
+                <span class="nx">url</span> <span class="o">=</span> <span class="nx">url</span><span class="o">+</span><span class="s2">&quot;?&quot;</span><span class="p">;</span>
+
+            <span class="p">}</span>
+    
+            <span class="k">else</span> <span class="p">{</span> 
+
+                <span class="nx">url</span> <span class="o">=</span> <span class="nx">url</span><span class="o">+</span><span class="s2">&quot;&amp;&quot;</span><span class="p">;</span>
+
+            <span class="p">}</span>
+  
+</pre></div>             </td>           </tr>                               <tr id="section-51">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-51">&#182;</a>               </div>               <p>This generates the <script> tag</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="nx">jsonpScript</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;script&quot;</span><span class="p">);</span>
+
+            <span class="nx">jsonpScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="nx">url</span> <span class="o">+</span> <span class="nx">method</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">+</span> <span class="nx">generatedFunction</span><span class="p">);</span>
+
+            <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;head&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">jsonpScript</span><span class="p">);</span>
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-52">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-52">&#182;</a>               </div>               <h2>buildURL</h2>
+
+<pre><code> Downloads all of the files listed in the checkbox attributes,
+ concatenates all files into a single file,
+ constructs a file url (if supported),
+ and calls the callback function when everything is complete
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">buildURL</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">checkboxes</span><span class="p">,</span> <span class="nx">fileName</span><span class="p">,</span> <span class="nx">lang</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-53">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-53">&#182;</a>               </div>               <p>If there is at least one checkbox element</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">if</span><span class="p">(</span><span class="nx">checkboxes</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-54">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-54">&#182;</a>               </div>               <p>LOCAL VARIABLES</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+                    <span class="nx">time</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">(),</span>
+                    <span class="nx">currentElem</span><span class="p">,</span>
+                    <span class="nx">location</span><span class="p">,</span>
+                    <span class="nx">repoAuthor</span><span class="p">,</span>
+                    <span class="nx">repoName</span><span class="p">,</span>
+                    <span class="nx">repoBranch</span><span class="p">,</span>
+                    <span class="nx">localPath</span><span class="p">,</span>
+                    <span class="nx">x</span><span class="p">,</span>
+                    <span class="nx">lastElem</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-55">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-55">&#182;</a>               </div>               <p>If the callback parameter is a function</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">callback</span> <span class="o">===</span> <span class="s2">&quot;function&quot;</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-56">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-56">&#182;</a>               </div>               <p>Saves the callback function as an object instance property</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">self</span><span class="p">.</span><span class="nx">callback</span> <span class="o">=</span> <span class="nx">callback</span><span class="p">;</span>
+
+                <span class="p">}</span>
+
+                <span class="k">if</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">currentCheckbox</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s2">&quot;cache-time&quot;</span><span class="p">))</span> <span class="p">{</span>
+
+                    <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s2">&quot;cache-time&quot;</span><span class="p">,</span> <span class="nx">time</span><span class="p">);</span>
+
+                <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-57">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-57">&#182;</a>               </div>               <p>Saves the checkbox elements as an object instance property</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">self</span><span class="p">.</span><span class="nx">checkboxes</span> <span class="o">=</span> <span class="nx">checkboxes</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-58">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-58">&#182;</a>               </div>               <p>Determines if the currently traversed checkbox element is the last checkbox element in the list</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">lastElem</span> <span class="o">=</span> <span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">currentCheckbox</span> <span class="o">===</span> <span class="nx">checkboxes</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">||</span> <span class="kc">false</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-59">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-59">&#182;</a>               </div>               <p>Stores the currently traversed checkbox element in a variable</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">currentElem</span> <span class="o">=</span> <span class="nx">checkboxes</span><span class="p">[</span><span class="nx">self</span><span class="p">.</span><span class="nx">currentCheckbox</span><span class="p">];</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-60">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-60">&#182;</a>               </div>               <p>Stores the HTML5 data attribute, data-location, inside of a variable (Defaulting to local)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">location</span> <span class="o">=</span> <span class="nx">currentElem</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;data-location&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="nx">self</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">location</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-61">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-61">&#182;</a>               </div>               <p>Stores the HTML5 data attribute, data-author, inside of a variable (Defaulting to an empty string)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">repoAuthor</span> <span class="o">=</span> <span class="nx">currentElem</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;data-author&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="nx">self</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">author</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-62">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-62">&#182;</a>               </div>               <p>Stores the HTML5 data attribute, data-repo, inside of a variable (Defaulting to an empty string)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">repoName</span> <span class="o">=</span> <span class="nx">currentElem</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;data-repo&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="nx">self</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">repo</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-63">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-63">&#182;</a>               </div>               <p>Stores the HTML5 data attribute, data-branch, inside of a variable (Defaulting to an empty string)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">repoBranch</span> <span class="o">=</span> <span class="nx">currentElem</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;data-branch&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="nx">self</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">branch</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-64">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-64">&#182;</a>               </div>               <p>Stores the HTML5 data attribute, data-localpath, inside of a variable (Defaulting to an empty string)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">localPath</span> <span class="o">=</span> <span class="nx">currentElem</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;data-localpath&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-65">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-65">&#182;</a>               </div>               <p>If the current browser supports Session Storage</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-66">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-66">&#182;</a>               </div>               <p>If there are already items stored in the session</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="k">if</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="nx">currentElem</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s2">&quot;cache-time&quot;</span><span class="p">))</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-67">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-67">&#182;</a>               </div>               <p>If the caching time has expired</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="k">if</span><span class="p">((</span><span class="nx">time</span> <span class="o">-</span> <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s2">&quot;cache-time&quot;</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cache</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-68">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-68">&#182;</a>               </div>               <p>Removes the session data</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                            <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">removeItem</span><span class="p">(</span><span class="nx">currentElem</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-69">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-69">&#182;</a>               </div>               <p>Removes the session data</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                            <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">removeItem</span><span class="p">(</span><span class="s2">&quot;cache-time&quot;</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-70">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-70">&#182;</a>               </div>               <p>Requests new data</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                            <span class="nx">self</span><span class="p">.</span><span class="nx">_sendRequest</span><span class="p">({</span> <span class="s2">&quot;location&quot;</span><span class="o">:</span> <span class="nx">location</span><span class="p">,</span> <span class="s2">&quot;repoAuthor&quot;</span><span class="o">:</span> <span class="nx">repoAuthor</span><span class="p">,</span> <span class="s2">&quot;repoName&quot;</span><span class="o">:</span> <span class="nx">repoName</span><span class="p">,</span> <span class="s2">&quot;repoBranch&quot;</span><span class="o">:</span> <span class="nx">repoBranch</span><span class="p">,</span> <span class="s2">&quot;localPath&quot;</span><span class="o">:</span> <span class="nx">localPath</span><span class="p">,</span> <span class="s2">&quot;currentElem&quot;</span><span class="o">:</span> <span class="nx">currentElem</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">time</span><span class="p">,</span> <span class="s2">&quot;lastElem&quot;</span><span class="o">:</span> <span class="nx">lastElem</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">fileName</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">lang</span> <span class="p">});</span>
+
+                        <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-71">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-71">&#182;</a>               </div>               <p>If the caching time has not expired</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="k">else</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-72">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-72">&#182;</a>               </div>               <p>Appends to the file instance property with whatever text is already in the session</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                            <span class="nx">self</span><span class="p">.</span><span class="nx">file</span> <span class="o">+=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="nx">currentElem</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-73">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-73">&#182;</a>               </div>               <p>Checks to the see if the file URL is ready to be created</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                            <span class="nx">self</span><span class="p">.</span><span class="nx">_fileStatus</span><span class="p">({</span> <span class="s2">&quot;lastElem&quot;</span><span class="o">:</span> <span class="nx">lastElem</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">lang</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">fileName</span> <span class="p">});</span>
+
+                        <span class="p">}</span>
+
+                    <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-74">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-74">&#182;</a>               </div>               <p>If there are no items in the session</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="k">else</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-75">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-75">&#182;</a>               </div>               <p>Requests new data</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="nx">self</span><span class="p">.</span><span class="nx">_sendRequest</span><span class="p">({</span> <span class="s2">&quot;location&quot;</span><span class="o">:</span> <span class="nx">location</span><span class="p">,</span> <span class="s2">&quot;repoAuthor&quot;</span><span class="o">:</span> <span class="nx">repoAuthor</span><span class="p">,</span> <span class="s2">&quot;repoName&quot;</span><span class="o">:</span> <span class="nx">repoName</span><span class="p">,</span> <span class="s2">&quot;repoBranch&quot;</span><span class="o">:</span> <span class="nx">repoBranch</span><span class="p">,</span> <span class="s2">&quot;localPath&quot;</span><span class="o">:</span> <span class="nx">localPath</span><span class="p">,</span> <span class="s2">&quot;currentElem&quot;</span><span class="o">:</span> <span class="nx">currentElem</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">time</span><span class="p">,</span> <span class="s2">&quot;lastElem&quot;</span><span class="o">:</span> <span class="nx">lastElem</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">fileName</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">lang</span> <span class="p">});</span>
+
+                    <span class="p">}</span>
+                    
+                <span class="p">}</span>
+
+            <span class="p">}</span>
+
+            <span class="k">else</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-76">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-76">&#182;</a>               </div>               <p>Calls the callback function that was ininitially passed into the buildURL method</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="p">{</span> <span class="s2">&quot;content&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">fileName</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">lang</span> <span class="p">});</span>
+
+            <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-77">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-77">&#182;</a>               </div>               <p>Maintains chainability</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-78">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-78">&#182;</a>               </div>               <h2>_localRequest</h2>
+
+<pre><code> Downloads the text of a local file
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">_localRequest</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-79">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-79">&#182;</a>               </div>               <p>LOCAL VARIABLES</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+                <span class="nx">xhr</span><span class="p">,</span>
+                <span class="nx">text</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-80">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-80">&#182;</a>               </div>               <p>Ajax Request wrapped in a try/catch block in case of an error</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">try</span> <span class="p">{</span>
+    
+</pre></div>             </td>           </tr>                               <tr id="section-81">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-81">&#182;</a>               </div>               <p>Constructs a new XMLHttpRequest object instance</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-82">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-82">&#182;</a>               </div>               <p>Creates a GET request with the relative url that is passed</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-83">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-83">&#182;</a>               </div>               <p>Ajax event handler to check if the request is finished</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">xhr</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  
+</pre></div>             </td>           </tr>                               <tr id="section-84">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-84">&#182;</a>               </div>               <p>If the Ajax request is complete and it is successful</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    
+</pre></div>             </td>           </tr>                               <tr id="section-85">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-85">&#182;</a>               </div>               <p>Save the text response in a local variable</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="nx">text</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">responseText</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">response</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-86">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-86">&#182;</a>               </div>               <p>Append the text response to the file instance property</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="nx">self</span><span class="p">.</span><span class="nx">file</span> <span class="o">+=</span> <span class="nx">text</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-87">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-87">&#182;</a>               </div>               <p>Sets necessary session data</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">elem</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">text</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-88">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-88">&#182;</a>               </div>               <p>Checks to the see if the file URL should be created yet</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="nx">self</span><span class="p">.</span><span class="nx">_fileStatus</span><span class="p">({</span> <span class="s2">&quot;lastElem&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lastElem</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lang</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fileName</span> <span class="p">});</span>
+
+                    <span class="p">}</span>
+                <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-89">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-89">&#182;</a>               </div>               <p>Sends the Ajax request</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+
+            <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-90">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-90">&#182;</a>               </div>               <p>Maintains chainability</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-91">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-91">&#182;</a>               </div>               <h2>_thirdPartyRequest</h2>
+
+<pre><code> Downloads the text of a third-party file (Currently only Github is supported)
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">_thirdPartyRequest</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-92">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-92">&#182;</a>               </div>               <p>Stores the local object context in the self local variable</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+                <span class="nx">text</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-93">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-93">&#182;</a>               </div>               <p>Calls the custom JSONP method (created by Oscar Goodson)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">this</span><span class="p">.</span><span class="nx">JSONP</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+        
+</pre></div>             </td>           </tr>                               <tr id="section-94">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-94">&#182;</a>               </div>               <p>If the request is a Github request</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">if</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s2">&quot;github&quot;</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-95">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-95">&#182;</a>               </div>               <p>Appends the parsed Github text response to the file instance property</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">text</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_parseGithubResponse</span><span class="p">({</span> <span class="s2">&quot;elem&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">elem</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="nx">data</span> <span class="p">})</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+                    <span class="nx">self</span><span class="p">.</span><span class="nx">file</span> <span class="o">+=</span> <span class="nx">text</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-96">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-96">&#182;</a>               </div>               <p>Stores all the necessary data inside of the session</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">elem</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">text</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-97">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-97">&#182;</a>               </div>               <p>Checks to the see if the file URL is ready to be created</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">self</span><span class="p">.</span><span class="nx">_fileStatus</span><span class="p">({</span> <span class="s2">&quot;lastElem&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lastElem</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lang</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fileName</span> <span class="p">});</span>
+
+                <span class="p">}</span>
+
+            <span class="p">});</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-98">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-98">&#182;</a>               </div>               <h2>_sendRequest</h2>
+
+<pre><code> Determines what type of request (local or third party) is sent
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">_sendRequest</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-99">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-99">&#182;</a>               </div>               <p>If the request is a Github request</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">if</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">location</span> <span class="o">===</span> <span class="s2">&quot;github&quot;</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-100">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-100">&#182;</a>               </div>               <p>If the Github rate limit has not been met</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">rateLimit</span> <span class="o">!==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-101">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-101">&#182;</a>               </div>               <p>Decreases the rate limit capacity amount</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">rateLimit</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-102">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-102">&#182;</a>               </div>               <p>Sends a third party file request</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">_thirdPartyRequest</span><span class="p">({</span> <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">location</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="o">:</span> <span class="s2">&quot;https://api.github.com/repos/&quot;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">repoAuthor</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">repoName</span> <span class="o">+</span> <span class="s2">&quot;/contents/?ref=&quot;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">repoBranch</span> <span class="o">+</span> <span class="s2">&quot;&amp;path=&quot;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">currentElem</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="s2">&quot;elem&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">currentElem</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">time</span><span class="p">,</span> <span class="s2">&quot;lastElem&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lastElem</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lang</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fileName</span> <span class="p">});</span>
+
+                <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-103">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-103">&#182;</a>               </div>               <p>If the Github rate limit has been met</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">else</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-104">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-104">&#182;</a>               </div>               <p>If a backup local path is provided</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="k">if</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">localPath</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-105">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-105">&#182;</a>               </div>               <p>Sends a local file request</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">_localRequest</span><span class="p">({</span> <span class="s2">&quot;url&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">localpath</span><span class="p">,</span> <span class="s2">&quot;elem&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">currentElem</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">time</span><span class="p">,</span> <span class="s2">&quot;lastElem&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lastElem</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lang</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fileName</span> <span class="p">});</span>
+
+                    <span class="p">}</span>
+
+                <span class="p">}</span>
+
+            <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-106">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-106">&#182;</a>               </div>               <p>If the request is not a Github request</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">else</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-107">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-107">&#182;</a>               </div>               <p>Sends a local file request</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">this</span><span class="p">.</span><span class="nx">_localRequest</span><span class="p">({</span> <span class="s2">&quot;url&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">currentElem</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="s2">&quot;elem&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">currentElem</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">time</span><span class="p">,</span> <span class="s2">&quot;lastElem&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lastElem</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lang</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fileName</span> <span class="p">});</span>
+                                
+            <span class="p">}</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-108">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-108">&#182;</a>               </div>               <h2>_parseGithubResponse</h2>
+
+<pre><code> Parses the Base 64 encoded Github response into text
+ This method was heavily inspired by [James Ward](https://github.com/jamesward/github-files)
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">_parseGithubResponse</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-109">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-109">&#182;</a>               </div>               <p>LOCAL VARIABLES</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+                <span class="nx">base64EncodedContent</span><span class="p">,</span>
+                <span class="nx">content</span><span class="p">,</span>
+                <span class="nx">contentArray</span><span class="p">,</span>
+                <span class="nx">text</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-110">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-110">&#182;</a>               </div>               <p>If Github found content and the global <code>atob</code> method is available (not currently available in IE)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">content</span> <span class="o">!==</span> <span class="kc">undefined</span> <span class="o">&amp;&amp;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">atob</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-111">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-111">&#182;</a>               </div>               <p>If the encoding is base64</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">encoding</span> <span class="o">===</span> <span class="s2">&quot;base64&quot;</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-112">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-112">&#182;</a>               </div>               <p>Stores the content property inside of the local variable</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">base64EncodedContent</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">content</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-113">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-113">&#182;</a>               </div>               <p>Removes all new lines</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">base64EncodedContent</span> <span class="o">=</span> <span class="nx">base64EncodedContent</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\n/g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">);</span>
+    
+</pre></div>             </td>           </tr>                               <tr id="section-114">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-114">&#182;</a>               </div>               <p>Stores the base64 encoded content inside of a local variable</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">content</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">atob</span><span class="p">(</span><span class="nx">base64EncodedContent</span><span class="p">);</span>
+    
+</pre></div>             </td>           </tr>                               <tr id="section-115">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-115">&#182;</a>               </div>               <p>Splits the content up into an array</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">contentArray</span> <span class="o">=</span> <span class="nx">content</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-116">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-116">&#182;</a>               </div>               <p>Grabs all of the content from the array and stores the text in a local variable</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">text</span> <span class="o">=</span> <span class="nx">contentArray</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">contentArray</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">)</span> <span class="o">||</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+                    
+                <span class="p">}</span>
+
+            <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-117">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-117">&#182;</a>               </div>               <p>Maintains chainability</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">return</span> <span class="nx">text</span><span class="p">;</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-118">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-118">&#182;</a>               </div>               <h2>createURL</h2>
+
+<pre><code> Constructs a file url using the HTML5 Filesystem API (Only currently available in Chrome 12+)
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">createURL</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-119">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-119">&#182;</a>               </div>               <p>LOCAL VARIABLES</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+                <span class="nx">blob</span><span class="p">;</span>
+ 
+</pre></div>             </td>           </tr>                               <tr id="section-120">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-120">&#182;</a>               </div>               <p>Request temporary storage data (even though we are not creating any files this step is necessary)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="nb">window</span><span class="p">.</span><span class="nx">storageInfo</span><span class="p">.</span><span class="nx">requestQuota</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">TEMPORARY</span><span class="p">,</span> <span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">grantedBytes</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-121">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-121">&#182;</a>               </div>               <p>The callback function that uses the granted bytes requested in the previous callback</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nb">window</span><span class="p">.</span><span class="nx">requestFileSystem</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">storageType</span><span class="p">,</span> <span class="nx">grantedBytes</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fs</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-122">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-122">&#182;</a>               </div>               <p>Creates a file (the name of the file is passed into the createURL method)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">fs</span><span class="p">.</span><span class="nx">root</span><span class="p">.</span><span class="nx">getFile</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">fileName</span><span class="p">,</span> <span class="p">{</span> <span class="nx">create</span><span class="o">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fileEntry</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-123">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-123">&#182;</a>               </div>               <p>Create a FileWriter object for our FileEntry</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="nx">fileEntry</span><span class="p">.</span><span class="nx">createWriter</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">fileWriter</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-124">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-124">&#182;</a>               </div>               <p>Create a new Blob</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                            <span class="nx">blob</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">window</span><span class="p">.</span><span class="nx">Blob</span><span class="p">([</span><span class="nx">obj</span><span class="p">.</span><span class="nx">data</span><span class="p">],</span> <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;text/&quot;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lang</span> <span class="p">});</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-125">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-125">&#182;</a>               </div>               <p>Calls the callback function that was passed in, and constructs then passes the url that references the recently created blob</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                            <span class="nx">obj</span><span class="p">.</span><span class="nx">callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">createObjectURL</span><span class="p">(</span><span class="nx">blob</span><span class="p">));</span>
+
+                        <span class="p">});</span>
+
+                    <span class="p">});</span>    
+
+                <span class="p">});</span>
+
+            <span class="p">});</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-126">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-126">&#182;</a>               </div>               <p>Maintains chainability</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-127">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-127">&#182;</a>               </div>               <h2>_fileStatus</h2>
+
+<pre><code> Determines if the file URL is ready to be created
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">_fileStatus</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-128">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-128">&#182;</a>               </div>               <p>LOCAL VARIABLES</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+                <span class="nx">url</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-129">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-129">&#182;</a>               </div>               <p>If the last checkbox is being process</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">if</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">lastElem</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-130">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-130">&#182;</a>               </div>               <p>Resets the currently traversed checkbox back to zero</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">this</span><span class="p">.</span><span class="nx">currentCheckbox</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-131">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-131">&#182;</a>               </div>               <p>If the current browser supports the HTML5 Filesystem API</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">if</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">supportsFilesystem</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-132">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-132">&#182;</a>               </div>               <p>Creates the file URL</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">self</span><span class="p">.</span><span class="nx">createURL</span><span class="p">({</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lang</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fileName</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">file</span><span class="p">,</span> <span class="s2">&quot;callback&quot;</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-133">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-133">&#182;</a>               </div>               <p>Saves the url inside of the session</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="nb">window</span><span class="p">.</span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s2">&quot;bloburl&quot;</span><span class="p">,</span> <span class="nx">url</span><span class="p">);</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-134">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-134">&#182;</a>               </div>               <p>Calls the callback function that was ininitially passed into the buildURL method</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="nx">self</span><span class="p">.</span><span class="nx">callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="p">{</span> <span class="s2">&quot;url&quot;</span><span class="o">:</span> <span class="nx">url</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">file</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fileName</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lang</span> <span class="p">});</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-135">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-135">&#182;</a>               </div>               <p>Removes the contents of the file instance property (that was used to create the file URL)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                        <span class="nx">self</span><span class="p">.</span><span class="nx">file</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+                    <span class="p">}});</span>
+                                    
+                <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-136">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-136">&#182;</a>               </div>               <p>If the current borwser does not support the HTML5 Filesystem API</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">else</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-137">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-137">&#182;</a>               </div>               <p>Calls the callback function that was ininitially passed into the buildURL method</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">self</span><span class="p">.</span><span class="nx">callback</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="p">{</span> <span class="s2">&quot;content&quot;</span><span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">file</span><span class="p">,</span> <span class="s2">&quot;fileName&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fileName</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="o">:</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lang</span> <span class="p">});</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-138">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-138">&#182;</a>               </div>               <p>Removes the contents of the file instance property (that was used to create the file URL)</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                    <span class="nx">self</span><span class="p">.</span><span class="nx">file</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+                <span class="p">}</span>
+
+            <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-139">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-139">&#182;</a>               </div>               <p>If the last checkbox is not being processed</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">else</span> <span class="p">{</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-140">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-140">&#182;</a>               </div>               <p>Increment the currently traversed checkbox number</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="k">this</span><span class="p">.</span><span class="nx">currentCheckbox</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-141">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-141">&#182;</a>               </div>               <p>Call the buildURL method again</p>             </td>             <td class="code">               <div class="highlight"><pre>
+                <span class="nx">self</span><span class="p">.</span><span class="nx">buildURL</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">checkboxes</span><span class="p">,</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fileName</span><span class="p">,</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">lang</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">callback</span><span class="p">);</span>
+
+            <span class="p">}</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-142">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-142">&#182;</a>               </div>               <p>Maintains chainability</p>             </td>             <td class="code">               <div class="highlight"><pre>
+            <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="p">}</span>
+
+    <span class="p">};</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-143">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-143">&#182;</a>               </div>               <p>Makes the local downloadBuilder object global</p>             </td>             <td class="code">               <div class="highlight"><pre>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">DownloadBuilder</span> <span class="o">=</span> <span class="nx">DownloadBuilder</span><span class="p">;</span>
+
+<span class="p">}));</span> <span class="c1">// End of Library</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
