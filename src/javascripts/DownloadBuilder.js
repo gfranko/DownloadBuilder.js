@@ -242,7 +242,7 @@
 
             }
   
-            // This generates the <script> tag
+            // This generates the script tag
             jsonpScript = document.createElement("script");
 
             jsonpScript.setAttribute("src", url + method + "=" + generatedFunction);

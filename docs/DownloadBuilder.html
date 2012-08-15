@@ -247,7 +247,7 @@ example2: url = http://url.com?example=param THEN http://url.com?example=param&a
 
             <span class="p">}</span>
   
-</pre></div>             </td>           </tr>                               <tr id="section-51">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-51">&#182;</a>               </div>               <p>This generates the <script> tag</p>             </td>             <td class="code">               <div class="highlight"><pre>
+</pre></div>             </td>           </tr>                               <tr id="section-51">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-51">&#182;</a>               </div>               <p>This generates the script tag</p>             </td>             <td class="code">               <div class="highlight"><pre>
             <span class="nx">jsonpScript</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;script&quot;</span><span class="p">);</span>
 
             <span class="nx">jsonpScript</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="nx">url</span> <span class="o">+</span> <span class="nx">method</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">+</span> <span class="nx">generatedFunction</span><span class="p">);</span>
