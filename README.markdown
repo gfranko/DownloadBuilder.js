@@ -50,6 +50,10 @@ If you find that you need a feature that DownloadBuilder does not currently supp
 
 ##Change Log
 
+`0.5.0` - September 12, 2012
+
+- Updated concatenation logic - Added a newline to separate different files within the contatenated file
+
 `0.4.0` - August 9, 2012
 
 - Improved Github checking logic

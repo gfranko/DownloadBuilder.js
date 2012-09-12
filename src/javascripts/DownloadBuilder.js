@@ -1,4 +1,4 @@
-/* DownloadBuilder.js - v0.4.0 - 2012-08-15
+/* DownloadBuilder.js - v0.5.0 - 2012-09-12
 * http://www.gregfranko.com/downloadBuilder.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -61,7 +61,7 @@
     DownloadBuilder.prototype = {
 
         // Library Version Number
-        VERSION: "0.4.0",
+        VERSION: "0.5.0",
 
         //Github Rate Limit URL
         githubRateLimitUrl: "https://api.github.com/rate_limit",
@@ -396,8 +396,20 @@
                         // Save the text response in a local variable
                         text = this.responseText || this.response || "";
 
-                        // Append the text response to the file instance property
-                        self.file += text;
+                        // If the file is empty
+                        if(!self.file) {
+
+                            // Append the text response to the file instance property
+                            self.file += text;
+
+                        }
+
+                        else {
+
+                            // Append a newline and a text response to the file instance property
+                            self.file += "\n" + text;
+
+                        }
 
                         // Sets necessary session data
                         window.sessionStorage.setItem(obj.elem.value, text || "");
@@ -438,7 +450,20 @@
                     // Appends the parsed Github text response to the file instance property
                     text = self._parseGithubResponse({ "elem": obj.elem, "data": data }) || "";
 
-                    self.file += text;
+                    // If the file is empty
+                    if(!self.file) {
+
+                        // Append the text response to the file instance property
+                        self.file += text;
+
+                    }
+
+                    else {
+
+                        // Append a newline and a text response to the file instance property
+                        self.file += "\n" + text;
+
+                    }
 
                     // Stores all the necessary data inside of the session
                     window.sessionStorage.setItem(obj.elem.value, text || "");
