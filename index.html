@@ -27,6 +27,12 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <style type="text/css">
+    pre.prettyprint {
+      overflow: scroll;
+      font-size: 11px;
+    }
+    </style>
   </head>
 
   <body>
@@ -104,8 +110,8 @@
           <h3>Include DownloadBuilder.js</h3>
           </p>
           <pre class="prettyprint">
-          // DownloadBuilder.js
-          &lt;script src="DownloadBuilder.js" /&gt;
+// DownloadBuilder.js
+&lt;script src="DownloadBuilder.js" /&gt;
           </pre>
           <br />
           <h3>HTML</h3>
@@ -116,8 +122,8 @@
           <strong>Note:</strong> You can use Github or local relative file paths.  This example uses Github and more information on setting up a link to a Github repository is in the JavaScript documentation.
           </p>
           <pre class="prettyprint">
-          // A checkbox with the correct Github filepath of testfile.js
-          &lt;label class="checkbox"&gt;&lt;input checked="checked" type="checkbox" value="src/javascripts/testfile.js"&gt;Test File&lt;/label&gt;
+// A checkbox with the correct Github filepath of testfile.js
+&lt;label class="checkbox"&gt;&lt;input checked="checked" type="checkbox" value="src/javascripts/testfile.js"&gt;Test File&lt;/label&gt;
           </pre>
           <br />
           <p>
@@ -129,14 +135,24 @@
               <strong>Note:</strong> You do not need to use a library, such as jQuery.  I am using it here for convenience.  Also, all options are optional and more documentation about all of the options can be found further down in the documentation.
           </p>
           <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
+//Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+$(function() {
 
-                  // All options passed to the DownloadBuilder object constructor are optional
-                  // This example is a sample Github setup
-                  var builder = new DownloadBuilder({ "location": "github", "author": "gfranko", "repo": "jquery.selectboxit.js", "branch": "dev" });
+  // All options passed to the DownloadBuilder object constructor are optional
+  // This example is a sample Github setup
+  var builder = new DownloadBuilder({
 
-              });
+    "location": "github",
+
+    "author": "gfranko",
+
+    "repo": "jquery.selectboxit.js",
+
+    "branch": "dev"
+
+  });
+
+});
           </pre>
           <br />
           <p class="well note">
@@ -145,31 +161,44 @@
               <strong>Note:</strong> More documentation about the buildURL method and other methods can be found further down in the documentation.
           </p>
           <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
+//Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+$(function() {
 
-                  // All options passed to the DownloadBuilder object constructor are optional
-                  // This example is a sample Github setup
-                  var builder = new DownloadBuilder({ "location": "github", "author": "gfranko", "repo": "jquery.selectboxit.js", "branch": "dev" });
+  // All options passed to the DownloadBuilder object constructor are optional
+  // This example is a sample Github setup
+  var builder = new DownloadBuilder({
 
-                  // Whenever an element with an id of css-generate is clicked, the buildURL() method is called
-                  $("#css-generate").on("click", function() {
+    "location": "github",
 
-                      // Pass in all of the checkboxes that should be used to download files, the desired name of the file to be created,
-                      // the type of file to be created, and a callback function
-                      builder.buildURL($("#css-downloads input[type='checkbox']:checked"), "jquery.selectboxit.css", "css", function(data) {
+    "author": "gfranko",
 
-                           // An object is passed to the callback function which contains a file url
-                           // (if the current browser supports the HTML5 Filesystem API), file content (the text of the file),
-                           // the name of the file that was created, and the type of file that was created.
+    "repo": "jquery.selectboxit.js",
 
-                           // Put any custom logic here
+    "branch": "dev"
 
-                      });
+  });
 
-                  });
+  // Whenever an element with an id of css-generate is clicked, the buildURL() method is called
+  $("#css-generate").on("click", function() {
 
-              });
+    // Pass in all of the checkboxes that should be used to download files, the desired name of the file to be created,
+    // the type of file to be created, and a callback function
+    builder.buildURL($("#css-downloads input[type='checkbox']:checked"), "jquery.selectboxit.css", "css",
+
+      function(data) {
+
+        // An object is passed to the callback function which contains a file url
+        // (if the current browser supports the HTML5 Filesystem API), file content (the text of the file),
+        // the name of the file that was created, and the type of file that was created.
+
+        // Put any custom logic here
+
+      }
+    );
+
+  });
+
+});
           </pre>
           <h2>Options</h2>
           <p class="well">
@@ -228,6 +257,22 @@
                   <td>String</td>
                   <td>""</td>
                   <td>Any valid Github repository branch name</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="client_id" data-content="A Github Oauth Client Id.  This is only necessary if you want to have a higher Github rate limit">
+                      <a href="#">client_id</a>
+                  </td>
+                  <td>String</td>
+                  <td>""</td>
+                  <td>Any valid Github Oauth Client Id</td>
+              </tr>
+              <tr>
+                  <td class="optionName" title="client_secret" data-content="A Github Oauth Client Secret.  This is only necessary if you want to have a higher Github rate limit">
+                      <a href="#">client_secret</a>
+                  </td>
+                  <td>String</td>
+                  <td>""</td>
+                  <td>Any valid Github Oauth Client Secret</td>
               </tr>
           </table>
           <br />
@@ -370,6 +415,12 @@
             $("a[href='#']").click(function(event) {
  
                 event.preventDefault();
+
+            });
+
+            $("pre.prettyprint").each(function() {
+
+              $(this).text($.trim($(this).text()));
 
             });
 
