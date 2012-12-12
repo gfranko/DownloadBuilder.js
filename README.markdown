@@ -50,6 +50,10 @@ If you find that you need a feature that DownloadBuilder does not currently supp
 
 ##Change Log
 
+`0.6.0` - December 12, 2012
+
+- Added Github Oauth Credentials global options: **client_id** and **client_secret**
+
 `0.5.0` - September 12, 2012
 
 - Updated concatenation logic - Added a newline to separate different files within the contatenated file

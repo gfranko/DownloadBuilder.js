@@ -1,4 +1,4 @@
-/* DownloadBuilder.js - v0.5.0 - 2012-09-12
+/* DownloadBuilder.js - v0.6.0 - 2012-12-12
 * http://www.gregfranko.com/downloadBuilder.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -35,7 +35,13 @@
             "repo": (obj && obj.repo) || "",
 
             // Github branch option
-            "branch": (obj && obj.branch) || ""
+            "branch": (obj && obj.branch) || "",
+
+            // Github client id
+            "client_id": (obj && obj.client_id) || "",
+
+            // Github client secret
+            "client_secret": (obj && obj.client_secret) || ""
 
         };
 
@@ -61,7 +67,7 @@
     DownloadBuilder.prototype = {
 
         // Library Version Number
-        VERSION: "0.5.0",
+        VERSION: "0.6.0",
 
         //Github Rate Limit URL
         githubRateLimitUrl: "https://api.github.com/rate_limit",
@@ -162,7 +168,7 @@
             var self = this;
 
             // Calls the custom JSONP method (created by Oscar Goodson)
-            this.JSONP(this.githubRateLimitUrl, function(data){
+            this.JSONP(this.githubRateLimitUrl + "?client_id=" + this.options.client_id + "&client_secret=" + this.options.client_secret, function(data){
         
                 // Sets an instance variable that determines if the Github rate limit has been reached or not
                 self.rateLimit = data.data.rate.remaining;
@@ -492,7 +498,7 @@
                     this.rateLimit -= 1;
 
                     // Sends a third party file request
-                    this._thirdPartyRequest({ "type": obj.location, "url": "https://api.github.com/repos/" + obj.repoAuthor + "/" + obj.repoName + "/contents/?ref=" + obj.repoBranch + "&path=" + obj.currentElem.value, "elem": obj.currentElem, "time": obj.time, "lastElem": obj.lastElem, "lang": obj.lang, "fileName": obj.fileName });
+                    this._thirdPartyRequest({ "type": obj.location, "url": "https://api.github.com/repos/" + obj.repoAuthor + "/" + obj.repoName + "/contents/?ref=" + obj.repoBranch + "&path=" + obj.currentElem.value + "&client_id=" + this.options.client_id + "&client_secret=" + this.options.client_secret, "elem": obj.currentElem, "time": obj.time, "lastElem": obj.lastElem, "lang": obj.lang, "fileName": obj.fileName });
 
                 }
 
