@@ -63,6 +63,7 @@
 </header>
 
 <hr>
+<p id="errorMessage" class="note alert alert-error hide"></p>
 <p class="well note">
 <strong>Note:</strong> This example page uses the jQuery plugin, <a href="https://github.com/gfranko/jquery.selectBoxIt.js" target="_blank">SelectBoxIt</a>, to demonstrate how to create custom builds with Downloadbuilder.js.
 </p>
@@ -164,7 +165,7 @@
 
             });
 
-            var builder = new DownloadBuilder({ "location": "github", "author": "gfranko", "repo": "jquery.selectboxit.js", "branch": "master" });
+            var builder = new DownloadBuilder({ "location": "github", "author": "gfranko", "repo": "jquery.selectboxit.js", "branch": "master", "error_el":document.getElementById('errorMessage') });
 
             $("#css-generate").on("click", function() {
 

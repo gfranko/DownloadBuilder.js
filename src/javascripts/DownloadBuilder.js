@@ -41,7 +41,10 @@
             "client_id": (obj && obj.client_id) || "",
 
             // Github client secret
-            "client_secret": (obj && obj.client_secret) || ""
+            "client_secret": (obj && obj.client_secret) || "",
+            
+            // error message element (if empty, will alert istead of populating)
+            "error_el": (obj && obj.error_el) || ""
 
         };
 
@@ -170,6 +173,15 @@
             // Calls the custom JSONP method (created by Oscar Goodson)
             this.JSONP(this.githubRateLimitUrl + "?client_id=" + this.options.client_id + "&client_secret=" + this.options.client_secret, function(data){
         
+                if(!data.data.rate){
+                    if(self.options.error_el){
+                        self.options.error_el.innerHTML = data.data.message;
+                        self.options.error_el.style.display = 'block';   
+                    }else{
+                        alert(data.data.message);
+                    }
+                    return;
+                }
                 // Sets an instance variable that determines if the Github rate limit has been reached or not
                 self.rateLimit = data.data.rate.remaining;
 
