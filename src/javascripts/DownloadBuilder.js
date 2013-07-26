@@ -118,7 +118,7 @@
 
             window.URL = window.URL || window.webkitURL || window.mozURL;
 
-            window.storageInfo = window.storageInfo || window.webkitStorageInfo || window.mozStorageInfo;
+            window.storageInfo = window.storageInfo || navigator.webkitTemporaryStorage || window.webkitStorageInfo || window.mozStorageInfo;
 
             // If any of the global HTML5 Filesystem variables are not available
             if(!window.requestFileSystem || !window.Blob || !window.URL || !window.storageInfo) {
