@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    `pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON('package.json'),
     meta: {
       banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
         '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
@@ -38,24 +38,24 @@ module.exports = function(grunt) {
       files: ['Gruntfile.js','src/javascripts/DownloadBuilder.js']
     },
     watch: {
-      gruntfile: {
-        files: '<config:lint.files>',
-        tasks: ['jshint:gruntfile']
-      },
-      src: {
-        files: '<config:lint.files>',
-        tasks: ['jshint:src', 'jasmine']
+      scripts: {
+        files: 'src/javascripts/DownloadBuilder.js',
+        tasks: ['jshint'],
+        options: {
+          event: ['changed', 'added', 'deleted']
+        }
       }
     },
     jshint: {
+      files: ['Gruntfile.js', 'src/javascripts/DownloadBuilder.js'],
       options: {
-        jshintrc: '.jshintrc'
-      },
-      gruntfile: {
-        src: 'Gruntfile.js'
-      },
-      src: {
-        src: 'src/javascripts/DownloadBuilder.js'
+        globals: {
+          jQuery: false,
+          console: false,
+          module: true,
+          document: true
+        },
+        sub: true
       }
     }
   });
@@ -63,12 +63,14 @@ module.exports = function(grunt) {
   //grunt.loadNpmTasks('grunt-jasmine-task');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   
   // Default task.
   grunt.registerTask('default', [
     'jshint',
     //'jasmine',
-    'uglify'
+    'uglify',
+    'watch'
   ]);
 
 };

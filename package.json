@@ -22,13 +22,16 @@
       "url": "http://www.gregfranko.com/DownloadBuilder.js/blob/master/LICENSE-MIT"
     }
   ],
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt-contrib-uglify": "~0.2.0",
     "grunt-contrib-jshint": "~0.6.0",
-    "grunt-jasmine-task":"~0.2.3",
-    "grunt": "~0.4.1"
+    "grunt-jasmine-task": "~0.2.3",
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.1"
   },
-  "keywords": ["HTML5 Filesystem", "Custom Download Builder"]
+  "keywords": [
+    "HTML5 Filesystem",
+    "Custom Download Builder"
+  ]
 }
