@@ -50,6 +50,10 @@ If you find that you need a feature that DownloadBuilder does not currently supp
 
 ##Change Log
 
+`0.7.0` - December 19, 2013
+
+- Maintenance release that fixed Github API requests and deprecated Filesystem API object usage
+
 `0.6.0` - December 12, 2012
 
 - Added Github Oauth Credentials global options: **client_id** and **client_secret**
