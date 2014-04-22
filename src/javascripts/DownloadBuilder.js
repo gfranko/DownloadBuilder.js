@@ -581,7 +581,10 @@
 
             // LOCAL VARIABLES
             var self = this,
-                blob;
+                blob,
+                onError = function(data){
+                    console.log('error writing to filesystem',data);
+                };
  
             // Request temporary storage data (even though we are not creating any files this step is necessary)
             window.storageInfo.requestQuota(1024*1024, function(grantedBytes) {
@@ -601,13 +604,13 @@
                             // Calls the callback function that was passed in, and constructs then passes the url that references the recently created blob
                             obj.callback.call(window, window.URL.createObjectURL(blob));
 
-                        });
+                        },onError);
 
-                    });    
+                    },onError);    
 
-                });
+                },onError);
 
-            });
+            },onError);
 
             // Maintains chainability
             return this;
